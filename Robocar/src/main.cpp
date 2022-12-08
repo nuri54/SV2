@@ -75,44 +75,27 @@ void driveStraightBackwards(){
 
 void loop() {
   // put your main code here, to run repeatedly:
-  delay(100);
-
+  delay(1000);
   while(true){
-    if(Uschall.read(CM) <= 50){
-      driveStraightBackwards();
-      delay(1000);
-      turnLeft();
-      delay(1000);
-    }
-    else{
-      driveStraightForward();
-    }
-
-/*
-    if(Uschall.read(CM)>50){
-      driveStraightForward();
-    }
-    else {
-      driveStraightBackwards();
-      delay(1000);
-      turnLeft();
-      delay(1000);
-    }  */
+  
+  while(Uschall.read(CM) < 80){
+    driveStraightBackwards();
+    delay(1000);
+    turnLeft();
+    delay(1000);
   }
+  driveStraightForward();
+  }
+  //Serial.println(test);
+  //if(Uschall.read(CM) < 50){
+    //if(test < 50){
+    //driveStraightBackwards();
+    //delay(1000);
+    //turnLeft();
+    //delay(1000);
+  //}
+
+  }
+
+
   
-  /*
-  driveStraightForward();
-  delay(1000);
-  turnRight();
-  delay(1000);
-  driveStraightForward();
-  delay(1000);
-  driveStraightBackwards();
-  delay(1000);
-  turnLeft();
-  delay(1000);
-  driveStraightForward();
-  digitalWrite(PIN_MOTOR_STBY,LOW);
-  */
-  
-}
