@@ -320,18 +320,5 @@ void loop(){
       infrared.resume();
     }
   }
-
-  // AUTONOM AUSSCHALTEN
-  if(AUTONOM == HIGH && results.value == OK){
-    stop();
-    AUTONOM = LOW;
-    infrared.resume();
-    RED = 255;
-    GREEN = 0;
-    BLUE = 255;
-    analogWrite(RED_PIN, RED);
-    analogWrite(GREEN_PIN, GREEN);
-    analogWrite(BLUE_PIN, BLUE);
-  }
  
 }
