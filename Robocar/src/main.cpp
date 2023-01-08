@@ -195,6 +195,33 @@ void loop(){
       analogWrite(BLUE_PIN, BLUE);
       switch(results.value){
         case F : forward(); break;
+        case L : turnLeft(); break;
+        case R : turnRight();break;
+        case OK : stop(); break;
+        case PLUS : increaseSpeed(); break;
+        case MINUS : decreaseSpeed(); break;
+        case AUTONOMOUS_ON :  AUTONOM = HIGH; 
+                              RED = 255;
+                              GREEN = 255;
+                              BLUE = 0;
+                              analogWrite(RED_PIN, RED);
+                              analogWrite(GREEN_PIN, GREEN);
+                              analogWrite(BLUE_PIN, BLUE);
+                              forward();
+                              break;
+        default : break;
+      }
+    }
+
+    if(Uschall_Back.read(CM) > 80){
+      Serial.println(results.value);
+      RED = 255;
+      GREEN = 0;
+      BLUE = 255;
+      analogWrite(RED_PIN, RED);
+      analogWrite(GREEN_PIN, GREEN);
+      analogWrite(BLUE_PIN, BLUE);
+      switch(results.value){
         case B : backward(); break;
         case L : turnLeft(); break;
         case R : turnRight();break;
@@ -223,6 +250,32 @@ void loop(){
       analogWrite(BLUE_PIN, BLUE);
       switch(results.value){
         case B : backward(); break;
+        case L : turnLeft(); break;
+        case R : turnRight();break;
+        case OK : stop(); break;
+        case PLUS : increaseSpeed(); break;
+        case MINUS : decreaseSpeed(); break;
+        case AUTONOMOUS_ON :  AUTONOM = HIGH;
+                              RED = 255;
+                              GREEN = 255;
+                              BLUE = 0;
+                              analogWrite(RED_PIN, RED);
+                              analogWrite(GREEN_PIN, GREEN);
+                              analogWrite(BLUE_PIN, BLUE);
+                              break;
+        default : break;
+      }
+    }
+
+    if(Uschall_Back.read(CM) < 80){
+      RED = 255;
+      GREEN = 0;
+      BLUE = 255;
+      analogWrite(RED_PIN, RED);
+      analogWrite(GREEN_PIN, GREEN);
+      analogWrite(BLUE_PIN, BLUE);
+      switch(results.value){
+        case F : forward(); break;
         case L : turnLeft(); break;
         case R : turnRight();break;
         case OK : stop(); break;
