@@ -3,8 +3,6 @@
 #include <IRremote.h>
 #include <Ultrasonic.h>
 
-// TODO: Modus für Selbstfahren wenn Taste geklickt wird
-
 ////////// IR REMOTE CODES ELEGOO //////////
 #define F               16736925      	// FORWARD
 #define B               16754775      	// BACKWARD
@@ -14,14 +12,6 @@
 #define PLUS            16732845        // INCREASE SPEED
 #define MINUS           16728765        // DECREASE SPEED
 #define AUTONOMOUS_ON   16750695        // TURN AUTONOM MODE ON  -  2
-#define AUTONOMOUS_OFF  16730805        // TURN AUTONOM MODE OFF  -  0
-
-/////////// IR OWN REMOTE CODES ///////////
-#define F_OWN           2152644671      // FORWARD
-#define B_OWN           2152626821      // BACKWARD
-#define L_OWN           2152612031      // LEFT
-#define R_OWN           2152596221      // RIGHT
-#define OK_OWN          2152659461      // STOP
 
 //////// IR SENSOR ////////
 #define IR_SENSOR  9
@@ -144,9 +134,6 @@ void increaseSpeed(){
   if(SPEED == 255){
     SPEED = 255;
   }
-  if(SPEED > 255){
-    SPEED = 255;
-  }
 }
 
 void decreaseSpeed(){
@@ -156,16 +143,12 @@ void decreaseSpeed(){
   if(SPEED == 0){
     SPEED = 51;
   }
-  if(SPEED < 0){
-    SPEED = 51;
-  }
 }
 
 void setup(){
   // TODO  nachgucken was das genau macht -> debug output at 9600 baud
   Serial.begin(9600);
 
-  // servo.attach(SERVO_PIN, 700, 2400);   //500: 0 Grad, 2400: 180 Grad
   servo.attach(SERVO_PIN);
   servo.write(95);  // damit Sensor nach vorne gerichtet ist
 
@@ -195,10 +178,10 @@ void setup(){
 }
 
 void loop(){
-  /*// Für Bluetooth - klappt aber irgendwie noch nicht
+  // Für Bluetooth - klappt aber irgendwie noch nicht
   if(Serial.available() > 0){
     Serial.println(Serial.read());
-  }*/
+  }
 
   // NICHT AUTONOM FAHREN
   if(infrared.decode(&results) && AUTONOM == LOW){
