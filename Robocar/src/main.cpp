@@ -146,7 +146,6 @@ void decreaseSpeed(){
 }
 
 void setup(){
-  // TODO  nachgucken was das genau macht -> debug output at 9600 baud
   Serial.begin(9600);
 
   servo.attach(SERVO_PIN);
@@ -306,6 +305,8 @@ void loop(){
     analogWrite(BLUE_PIN, BLUE);
     infrared.resume();
   }
+    //RÜCKWÄRTS FAHREN 
+    //Dauer sweep
 
   // AUTONOM FAHREN
   if(AUTONOM == HIGH){
@@ -325,20 +326,21 @@ void loop(){
     else if(Uschall_Front.read(CM) < 80){
       stop();
       sweep();
-      if(rightDistance > leftDistance && rightDistance > middleDistance){
+      if(rightDistance > leftDistance && rightDistance > middleDistance && rightDistance > 80){
         turnRight();
         delay(1000);
         forward();
       }
-      if(leftDistance > rightDistance && leftDistance > middleDistance){
+      else if(leftDistance > rightDistance && leftDistance > middleDistance && leftDistance > 80){
         turnLeft();
         delay(1000);
         forward();
       }
-      if(middleDistance > rightDistance && middleDistance > leftDistance){
+      else{
         while(Uschall_Back.read(CM) > 80){
           backward();
         }
+      
         stop();
         sweep();
         if(rightDistance > leftDistance && rightDistance > 80){
