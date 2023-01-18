@@ -170,10 +170,6 @@ void setup(){
   pinMode(GREEN_PIN, OUTPUT);
   pinMode(BLUE_PIN, OUTPUT);
 
-  //GELB
-  // analogWrite(RED_PIN, 0);
-  // analogWrite(GREEN_PIN, 0);
-  // analogWrite(BLUE_PIN, 255);
 }
 
 void loop(){
@@ -184,7 +180,7 @@ void loop(){
 
   // NICHT AUTONOM FAHREN
   if(infrared.decode(&results) && AUTONOM == LOW){
-    if(Uschall_Front.read(CM) > 80){
+    if((Uschall_Front.read(CM) > 80) || (Uschall_Back.read(CM) < 80)){
       Serial.println(results.value);
       RED = 255;
       GREEN = 0;
@@ -212,8 +208,7 @@ void loop(){
       }
     }
 
-    if(Uschall_Back.read(CM) > 80){
-      Serial.println(results.value);
+    if((Uschall_Back.read(CM) > 80) || (Uschall_Front.read(CM) < 80)){
       RED = 255;
       GREEN = 0;
       BLUE = 255;
@@ -235,58 +230,6 @@ void loop(){
                               analogWrite(GREEN_PIN, GREEN);
                               analogWrite(BLUE_PIN, BLUE);
                               forward();
-                              break;
-        default : break;
-      }
-    }
-
-    if(Uschall_Front.read(CM) < 80){
-      RED = 255;
-      GREEN = 0;
-      BLUE = 255;
-      analogWrite(RED_PIN, RED);
-      analogWrite(GREEN_PIN, GREEN);
-      analogWrite(BLUE_PIN, BLUE);
-      switch(results.value){
-        case B : backward(); break;
-        case L : turnLeft(); break;
-        case R : turnRight();break;
-        case OK : stop(); break;
-        case PLUS : increaseSpeed(); break;
-        case MINUS : decreaseSpeed(); break;
-        case AUTONOMOUS_ON :  AUTONOM = HIGH;
-                              RED = 255;
-                              GREEN = 255;
-                              BLUE = 0;
-                              analogWrite(RED_PIN, RED);
-                              analogWrite(GREEN_PIN, GREEN);
-                              analogWrite(BLUE_PIN, BLUE);
-                              break;
-        default : break;
-      }
-    }
-
-    if(Uschall_Back.read(CM) < 80){
-      RED = 255;
-      GREEN = 0;
-      BLUE = 255;
-      analogWrite(RED_PIN, RED);
-      analogWrite(GREEN_PIN, GREEN);
-      analogWrite(BLUE_PIN, BLUE);
-      switch(results.value){
-        case F : forward(); break;
-        case L : turnLeft(); break;
-        case R : turnRight();break;
-        case OK : stop(); break;
-        case PLUS : increaseSpeed(); break;
-        case MINUS : decreaseSpeed(); break;
-        case AUTONOMOUS_ON :  AUTONOM = HIGH;
-                              RED = 255;
-                              GREEN = 255;
-                              BLUE = 0;
-                              analogWrite(RED_PIN, RED);
-                              analogWrite(GREEN_PIN, GREEN);
-                              analogWrite(BLUE_PIN, BLUE);
                               break;
         default : break;
       }
@@ -305,8 +248,6 @@ void loop(){
     analogWrite(BLUE_PIN, BLUE);
     infrared.resume();
   }
-    //RÜCKWÄRTS FAHREN 
-    //Dauer sweep
 
   // AUTONOM FAHREN
   if(AUTONOM == HIGH){
